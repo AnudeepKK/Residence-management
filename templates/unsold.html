@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Houses for Sale</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("/static/paper.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .card {
+            margin: 10px;
+            flex: 0 0 auto;
+        }
+        #houses {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px; /* Adjust gap as needed */
+        }
+        #houses .row {
+            margin-right: -10px;
+            margin-left: -10px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <h1 class="my-4">Houses for Sale</h1>
+        <div id="houses" class="row">
+            <!-- Houses will be displayed here -->
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function loadHouses() {
+            fetch('/unsold-houses')
+                .then(response => response.json())
+                .then(houses => {
+                    const houseContainer = document.getElementById('houses');
+                    houseContainer.innerHTML = ''; // Clear previous data
+                    houses.forEach(house => {
+                        const card = document.createElement('div');
+                        card.classList.add('col-lg-3', 'col-md-5', 'col-sm-12', 'card');
+                        card.innerHTML = `
+                            <div class="card-body">
+                                <h5 class="card-title">House Number: ${house.house_no}</h5>
+                                <p class="card-text">Address: ${house.address}</p>
+                                <p class="card-text">Price: ${house.price}</p>
+                                <p class="card-text">Area: ${house.area}</p>
+                                <p class="card-text">Rooms: ${house.no_of_rooms}</p>
+                                <p class="card-text">Floors: ${house.floor}</p>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#houseOwnerModal${house.house_no}">
+                                    Owner Contact
+                                </button>
+                            </div>
+                        `;
+                        houseContainer.appendChild(card);
+
+                        // Modal for owner contact
+                        const modal = `
+                            <div class="modal fade" id="houseOwnerModal${house.house_no}" tabindex="-1" role="dialog" aria-labelledby="houseOwnerModalLabel${house.house_no}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="houseOwnerModalLabel${house.house_no}">Owner Information</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">House Number: ${house.house_no}</h5>
+                                                    <p class="card-text">Address: ${house.address}</p>
+                                                    <p class="card-text">Price: ${house.price}</p>
+                                                    <p class="card-text">Area: ${house.area}</p>
+                                                    <p class="card-text">Rooms: ${house.no_of_rooms}</p>
+                                                    <p class="card-text">Floors: ${house.floor}</p>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Owner: ${house.owner_name}</h5>
+                                                    <p class="card-text">Phone: ${house.phone_no}</p>
+                                                    <p class="card-text">Occupation: ${house.occupation}</p>
+                                                    <p class="card-text">Email: ${house.email}</p>
+                                                    <p class="card-text">DOB: ${house.dob}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        document.body.insertAdjacentHTML('beforeend', modal);
+                    });
+                })
+                .catch(error => console.error('Error fetching houses:', error));
+        }
+
+        // Call loadHouses function when the page is loaded
+        window.addEventListener('load', loadHouses);
+    </script>
+</body>
+</html>
