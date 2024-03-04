@@ -13,10 +13,11 @@ MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
 MYSQL_DB = os.getenv("MYSQL_DB")
 
 # MySQL configurations
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'residence'
+app.config['MYSQL_HOST'] = MYSQL_HOST
+app.config['MYSQL_USER'] = MYSQL_USER
+app.config['MYSQL_PASSWORD'] = MYSQL_PASSWORD
+app.config['MYSQL_DB'] = MYSQL_DB
+
 
 mysql = MySQL(app)
 
