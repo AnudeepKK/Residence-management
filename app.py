@@ -20,8 +20,6 @@ app.config['MYSQL_DB'] = MYSQL_DB
 app.config['MYSQL_PORT'] = 3306  
 app.config['MYSQL_UNIX_SOCKET'] = None
 
-
-
 mysql = MySQL(app)
 
 @app.route('/')
@@ -103,4 +101,4 @@ def search_house():
         return jsonify({'message': 'House not found or owner name does not match'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)
