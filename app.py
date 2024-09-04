@@ -18,7 +18,7 @@ app.config['MYSQL_HOST'] = MYSQL_HOST
 app.config['MYSQL_USER'] = MYSQL_USER
 app.config['MYSQL_PASSWORD'] = MYSQL_PASSWORD
 app.config['MYSQL_DB'] = MYSQL_DB
-app.config['MYSQL_PORT'] = MYSQL_PORT
+app.config['MYSQL_PORT'] = int(MYSQL_PORT) 
 
 
 mysql = MySQL(app)
