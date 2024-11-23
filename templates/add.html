@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>House</title>
+  <!-- Bootstrap CSS -->
+   <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy0Qh0260ewaf8Mdg0iWyRw8iZflnqzqOf" crossorigin="anonymous">
+</head>
+
+<body>
+  {% include "navbar.html" %}
+  <div class="container mt-5">
+    <h1 class="mb-4">Add New House</h1>
+    <form action="{{ url_for('add') }}" method="POST">
+      <div class="mb-3">
+        <label for="house_no" class="form-label">House Number</label>
+        <input id="house_no" name="house_no" type="text" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input id="address" name="address" type="text" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="availability" class="form-label">Availability</label>
+        <select id="availability" name="availability" class="form-select" required>
+          <option value="unsold">Unsold</option>
+          <option value="sold">Sold</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="no_of_rooms" class="form-label">Number of Rooms</label>
+        <input id="no_of_rooms" name="no_of_rooms" type="number" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input id="price" name="price" type="number" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="floor" class="form-label">Floor</label>
+        <input id="floor" name="floor" type="text" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="area" class="form-label">Area</label>
+        <input id="area" name="area" type="text" class="form-control" required>
+      </div>
+
+      <div id="sold-fields" style="display: none;">
+        <h3 class="mb-3">Owner Details</h3>
+        <div class="mb-3">
+          <label for="owner_name" class="form-label">Owner Name</label>
+          <input id="owner_name" name="owner_name" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input id="phone" name="phone" type="tel" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="occupation" class="form-label">Occupation</label>
+          <input id="occupation" name="occupation" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="dob" class="form-label">Date of Birth</label>
+          <input id="dob" name="dob" type="date" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" name="email" type="email" class="form-control">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <br>
+  {% include 'footer.html' %}
+  <!-- Bootstrap JS (Optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-4d5GOTXJtFqccCUW5c+wn6QyZqLcy9yskOMdE6TJc3K4IjksdJMYr/tkCNEjz+Sc" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.getElementById('availability').addEventListener('change', function() {
+      var soldFields = document.getElementById('sold-fields');
+      if (this.value === 'sold') {
+        soldFields.style.display = 'block';
+      } else {
+        soldFields.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -27,8 +27,34 @@
             margin-right: -10px;
             margin-left: -10px;
         }
+        .card-bg {
+    position: relative; /* Make the container position relative */
+}
+
+.card-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../static/assets/houses/house4.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.5; /* Adjust the opacity of the background image */
+}
+
+.card-body {
+    position: relative; /* Make sure the card body stays on top of the background */
+    z-index: 1; /* Ensure the card body is above the background */
+    font-weight: bold;
+}
+
+
     </style>
 </head>
+
+
 <body>
     {% include 'navbar.html' %}
     <div class="container">
@@ -57,6 +83,7 @@
                         const card = document.createElement('div');
                         card.classList.add('col-lg-3', 'col-md-5', 'col-sm-12', 'card');
                         card.innerHTML = `
+                        <div class="card-bg">
                             <div class="card-body">
                                 <h5 class="card-title">House Number: ${house.house_no}</h5>
                                 <p class="card-text">Address: ${house.address}</p>
@@ -68,6 +95,7 @@
                                     Owner Contact
                                 </button>
                             </div>
+                        </div>
                         `;
                         houseContainer.appendChild(card);
 

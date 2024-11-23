@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update House</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Update House</h1>
+    <form action="{{ url_for('update_house', house_id=house.id) }}" method="POST" onsubmit="return validateForm()">
+        <label for="house_no">House Number:</label>
+        <input type="text" id="house_no" name="house_no" value="{{ house.house_no }}">
+        <div id="house_no_error" class="error"></div>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" value="{{ house.address }}">
+        <div id="address_error" class="error"></div>
+
+        <label for="availability">Availability:</label>
+        <select id="availability" name="availability">
+            <option value="unsold" {% if house.availability == 'unsold' %} selected {% endif %}>Unsold</option>
+            <option value="sold" {% if house.availability == 'sold' %} selected {% endif %}>Sold</option>
+        </select>
+
+        <label for="no_of_rooms">Number of Rooms:</label>
+        <input type="number" id="no_of_rooms" name="no_of_rooms" value="{{ house.no_of_rooms }}">
+        <div id="no_of_rooms_error" class="error"></div>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value="{{ house.price }}">
+        <div id="price_error" class="error"></div>
+
+        <label for="floor">Floor:</label>
+        <input type="number" id="floor" name="floor" value="{{ house.floor }}">
+        <div id="floor_error" class="error"></div>
+
+        <label for="area">Area:</label>
+        <input type="text" id="area" name="area" value="{{ house.area }}">
+        <div id="area_error" class="error"></div>
+
+        <!-- Owner detail fields -->
+        <label for="owner_name">Owner Name:</label>
+        <input type="text" id="owner_name" name="owner_name" value="{{ house.owner_name }}">
+        <div id="owner_name_error" class="error"></div>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" value="{{ house.phone }}">
+        <div id="phone_error" class="error"></div>
+
+        <label for="occupation">Occupation:</label>
+        <input type="text" id="occupation" name="occupation" value="{{ house.occupation }}">
+        <div id="occupation_error" class="error"></div>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" value="{{ house.dob }}">
+        <div id="dob_error" class="error"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ house.email }}">
+        <div id="email_error" class="error"></div>
+
+        <input type="submit" value="Update">
+    </form>
+
+    <script>
+        function validateForm() {
+            // Reset error messages
+            document.getElementById('house_no_error').innerHTML = "";
+            document.getElementById('address_error').innerHTML = "";
+            document.getElementById('no_of_rooms_error').innerHTML = "";
+            document.getElementById('price_error').innerHTML = "";
+            document.getElementById('floor_error').innerHTML = "";
+            document.getElementById('area_error').innerHTML = "";
+            document.getElementById('owner_name_error').innerHTML = "";
+            document.getElementById('phone_error').innerHTML = "";
+            document.getElementById('occupation_error').innerHTML = "";
+            document.getElementById('dob_error').innerHTML = "";
+            document.getElementById('email_error').innerHTML = "";
+
+            // Get input values
+            var noOfRooms = document.getElementById('no_of_rooms').value;
+            var price = document.getElementById('price').value;
+            var floor = document.getElementById('floor').value;
+
+            // Check if numbers are positive
+            var valid = true;
+            if (noOfRooms < 0) {
+                document.getElementById('no_of_rooms_error').innerHTML = "Please enter a positive number.";
+                valid = false;
+            }
+            if (price < 0) {
+                document.getElementById('price_error').innerHTML = "Please enter a positive number.";
+                valid = false;
+            }
+            if (floor < 0) {
+                document.getElementById('floor_error').innerHTML = "Please enter a positive number.";
+                valid = false;
+            }
+
+            return valid; // Allow form submission if all fields are valid
+        }
+    </script>
+</body>
+</html>
